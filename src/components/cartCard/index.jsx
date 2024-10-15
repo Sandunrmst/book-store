@@ -1,4 +1,11 @@
+import { useDispatch } from "react-redux";
+import { removeFromCart } from "../../store/slices/cartslice";
+
 function CartCard({ cartItem }) {
+  const dispatch = useDispatch();
+  function handleRemoveFromCart() {
+    dispatch(removeFromCart(cartItem.isbn13));
+  }
   return (
     <div className="w-full flex justify-evenly  border-2 rounded-md border-cyan-700 p-2 shadow-md gap-2">
       <div className="flex-1">
@@ -36,7 +43,10 @@ function CartCard({ cartItem }) {
         <button className="p-2 w-[80px] mt-2 bg-cyan-700 rounded-md text-white hover:bg-cyan-600 transition-all duration-100">
           Update
         </button>
-        <button className="p-2 w-[80px] mt-2 bg-cyan-700 rounded-md text-white hover:bg-cyan-600 transition-all duration-100">
+        <button
+          onClick={handleRemoveFromCart}
+          className="p-2 w-[80px] mt-2 bg-cyan-700 rounded-md text-white hover:bg-cyan-600 transition-all duration-100"
+        >
           Remove
         </button>
       </div>
