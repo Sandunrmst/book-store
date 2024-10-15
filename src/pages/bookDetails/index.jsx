@@ -1,6 +1,7 @@
+import { useEffect, useState } from "react";
 import CartIndicater from "../../components/cart";
 import { FaHome } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function BookDetailsPage() {
   const navigate = useNavigate();
@@ -8,6 +9,29 @@ function BookDetailsPage() {
   const handleCartNavigation = () => {
     navigate("/");
   };
+
+  const bookISBN = useParams();
+
+  const [bookDetails, setBookDetails] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  async function fetchBookDetails() {
+    setLoading(true);
+    const data = await fetch(
+      `https://api.itbook.store/1.0/books/${bookISBN.id}`
+    );
+    const bookDetails = await data.json();
+
+    if (bookDetails) {
+      setLoading(false);
+      setBookDetails(bookDetails);
+    }
+  }
+
+  useEffect(() => {
+    fetchBookDetails();
+  }, []);
+
   return (
     <>
       <div className="bg-cyan-700 py-4">
@@ -26,32 +50,38 @@ function BookDetailsPage() {
 
         <div className="w-full flex mt-16">
           <div className="w-[30%]">
-            <img src="" alt="" className="object-cover w-full" />
+            <img
+              src={bookDetails?.image}
+              alt={bookDetails?.title}
+              className="object-cover w-full"
+            />
           </div>
-          <div className="w-[50%]">
+          <div className="w-[50%] pt-10">
             <h2>
-              <span className="font-bold">Title:</span> Title
+              <span className="font-bold">Title:</span> {bookDetails?.title}
             </h2>
             <h3>
-              <span className="font-bold">Subtitle:</span> Title
+              <span className="font-bold">Subtitle:</span>{" "}
+              {bookDetails?.subtitle}
             </h3>
             <p>
-              <span className="font-bold">ISBN:</span> Title
+              <span className="font-bold">ISBN:</span> {bookDetails?.isbn13}
             </p>
             <p>
-              <span className="font-bold">Price:</span> Title
+              <span className="font-bold">Price:</span> {bookDetails?.price}
             </p>
             <p>
-              <span className="font-bold">Author:</span> Title
+              <span className="font-bold">Author:</span> {bookDetails?.authors}
             </p>
             <p>
-              <span className="font-bold">Year:</span> Title
+              <span className="font-bold">Year:</span> {bookDetails?.year}
             </p>
             <p>
-              <span className="font-bold">Description:</span> Title
+              <span className="font-bold">Description:</span>{" "}
+              {bookDetails?.desc}
             </p>
           </div>
-          <div className="w-[30%] flex flex-col items-end">
+          <div className="w-[30%] flex flex-col items-end pt-10">
             <input
               className="border-2 border-cyan-700 rounded-md w-14 text-slate-950"
               type="number"
