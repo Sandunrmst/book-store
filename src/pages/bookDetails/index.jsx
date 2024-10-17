@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import CartIndicater from "../../components/cart";
 import { FaHome } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../store/slices/cartslice";
 
 function BookDetailsPage() {
   const navigate = useNavigate();
@@ -32,6 +34,11 @@ function BookDetailsPage() {
     fetchBookDetails();
   }, []);
 
+  const dispatch = useDispatch();
+
+  function handleAddToCart() {
+    dispatch(addToCart(bookDetails));
+  }
   return (
     <>
       <div className="bg-cyan-700 py-4">
@@ -88,7 +95,10 @@ function BookDetailsPage() {
               name="cartcounter"
               min="1"
             />
-            <button className="p-2 mt-2 bg-cyan-700 rounded-md text-white hover:bg-cyan-600 transition-all duration-100">
+            <button
+              onClick={handleAddToCart}
+              className="p-2 mt-2 bg-cyan-700 rounded-md text-white hover:bg-cyan-600 transition-all duration-100"
+            >
               Add to Cart
             </button>
           </div>
