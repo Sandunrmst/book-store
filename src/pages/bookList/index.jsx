@@ -58,11 +58,21 @@ function BookListPage() {
         </div>
         <h2 className="text-2xl font-bold text-cyan-700 mb-5">New Books</h2>
         <div className="min-h-[80vh] grid sm:grid-cols-1 md:grid-cols-2  lg:grid-cols-2 max-w-6xl mx-auto gap-y-10 gap-x-12">
-          {bookList && bookList.length
-            ? bookList.map((bookItem, index) => (
+          {searchResult.books && searchResult.books.length > 0 && (
+            <>
+              {searchResult.books.map((bookItem, index) => (
                 <BookCard key={index} bookItem={bookItem} />
-              ))
-            : null}
+              ))}
+            </>
+          )}
+
+          {bookList && bookList.length ? (
+            bookList.map((bookItem, index) => (
+              <BookCard key={index} bookItem={bookItem} />
+            ))
+          ) : (
+            <p>No books availabele</p>
+          )}
         </div>
       </div>
     </>
