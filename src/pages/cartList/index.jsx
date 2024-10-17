@@ -39,15 +39,15 @@ function CartListPage() {
           />
         </div>
 
-        <div className="w-full flex mt-10">
-          <div className="w-[50%] flex flex-col gap-4">
+        <div className="w-full flex-row mx-auto md:flex pt-10">
+          <div className="md:w-[50%] flex flex-col gap-4">
             {cart && cart.length
               ? cart.map((cartItem, index) => (
                   <CartCard key={index} cartItem={cartItem} />
                 ))
               : null}
           </div>
-          <div className="w-[50%] flex justify-center">
+          <div className="md:w-[50%] flex justify-center">
             <h1 className="text-2xl font-bold">
               Total:{" "}
               <span className="font-bold text-cyan-700">
