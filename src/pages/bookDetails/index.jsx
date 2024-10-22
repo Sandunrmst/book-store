@@ -16,6 +16,7 @@ function BookDetailsPage() {
 
   const [bookDetails, setBookDetails] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [quantity, setQuantity] = useState(1);
 
   async function fetchBookDetails() {
     setLoading(true);
@@ -36,8 +37,12 @@ function BookDetailsPage() {
 
   const dispatch = useDispatch();
 
+  function handleQuantity(e) {
+    setQuantity(Number(e.target.value));
+  }
+
   function handleAddToCart() {
-    dispatch(addToCart(bookDetails));
+    dispatch(addToCart({ ...bookDetails, quantity }));
   }
   return (
     <>
@@ -94,6 +99,8 @@ function BookDetailsPage() {
               type="number"
               name="cartcounter"
               min="1"
+              value={quantity}
+              onChange={handleQuantity}
             />
             <button
               onClick={handleAddToCart}
