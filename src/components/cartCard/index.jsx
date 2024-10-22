@@ -1,16 +1,21 @@
 import { useDispatch } from "react-redux";
-import { removeFromCart } from "../../store/slices/cartslice";
+import { removeFromCart, updateQuantity } from "../../store/slices/cartslice";
+import { useState } from "react";
 
 function CartCard({ cartItem }) {
-  const [quantity, setQuantity] = useState(item.quantity);
+  const [quantity, setQuantity] = useState(cartItem.quantity);
   const dispatch = useDispatch();
 
-  const handleQuantity = () => {
+  const handleQuantity = (e) => {
     setQuantity(Number(e.target.value));
   };
 
   function handleRemoveFromCart() {
     dispatch(removeFromCart(cartItem.isbn13));
+  }
+
+  function handleUpdate() {
+    dispatch(updateQuantity({ isbn13: cartItem.isbn13, quantity }));
   }
   return (
     <div className="w-full flex justify-evenly  border-2 rounded-md border-cyan-700 p-2 shadow-md gap-2">
