@@ -2,7 +2,13 @@ import { useDispatch } from "react-redux";
 import { removeFromCart } from "../../store/slices/cartslice";
 
 function CartCard({ cartItem }) {
+  const [quantity, setQuantity] = useState(item.quantity);
   const dispatch = useDispatch();
+
+  const handleQuantity = () => {
+    setQuantity(Number(e.target.value));
+  };
+
   function handleRemoveFromCart() {
     dispatch(removeFromCart(cartItem.isbn13));
   }
@@ -39,8 +45,13 @@ function CartCard({ cartItem }) {
           type="number"
           name="cartcounter"
           min="1"
+          value={quantity}
+          onChange={handleQuantity}
         />
-        <button className="p-2 w-[80px] mt-2 bg-cyan-700 rounded-md text-white hover:bg-cyan-600 transition-all duration-100">
+        <button
+          onClick={handleUpdate}
+          className="p-2 w-[80px] mt-2 bg-cyan-700 rounded-md text-white hover:bg-cyan-600 transition-all duration-100"
+        >
           Update
         </button>
         <button
