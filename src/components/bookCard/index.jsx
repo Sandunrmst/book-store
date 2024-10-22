@@ -1,12 +1,19 @@
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { useState } from "react";
 import { addToCart } from "../../store/slices/cartslice";
 
 function BookCard({ bookItem }) {
   const dispatch = useDispatch();
 
+  const [quantity, setQuantity] = useState(1);
+
+  function handleQuantity(e) {
+    setQuantity(Number(e.target.value));
+  }
+
   function handleAddToCart() {
-    dispatch(addToCart(bookItem));
+    dispatch(addToCart({ ...bookItem, quantity }));
   }
 
   return (
@@ -44,6 +51,8 @@ function BookCard({ bookItem }) {
           type="number"
           name="cartcounter"
           min="1"
+          value={quantity}
+          onChange={handleQuantity}
         />
         <button
           onClick={handleAddToCart}

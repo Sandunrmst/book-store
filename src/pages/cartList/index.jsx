@@ -19,7 +19,7 @@ function CartListPage() {
     setTotal(
       cart.reduce((acc, current) => {
         const removeDollar = parseFloat(current.price.replace("$", ""));
-        return acc + removeDollar;
+        return acc + removeDollar * current.quantity;
       }, 0)
     );
   }, [cart]);
